@@ -17,9 +17,6 @@
 
     Merci de votre confiance !
 
-    @component('mail::button', ['url' => config('app.url'), 'color' => 'success'])
-        Voir ma commande
-    @endcomponent
 
     **ISI BURGER** — Le meilleur burger de Dakar
 @endcomponent

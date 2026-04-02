@@ -73,7 +73,7 @@
                         <form method="POST"
                               action="{{ route('gestionnaire.burgers.destroy', $burger) }}"
                               style="display:inline;"
-                              onsubmit="return confirm('Archiver ce burger ?')">
+                              onsubmit="return confirm('Supprimer définitivement ce burger ?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">

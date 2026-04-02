@@ -66,6 +66,20 @@ class CommandeController extends Controller
         return back()->with('success', 'Commande annulée !');
     }
 
+    public function supprimer($id)
+    {
+        $commande = Commande::findOrFail($id);
+
+        // On peut supprimer seulement si annulée
+        if ($commande->statut !== 'annulee') {
+            return back()->with('error', 'Vous ne pouvez supprimer que les commandes annulées !');
+        }
+
+        $commande->delete();
+
+        return back()->with('success', 'Commande supprimée définitivement !');
+    }
+
     // CLIENT
     public function indexClient()
     {
@@ -122,5 +136,26 @@ class CommandeController extends Controller
             ->findOrFail($id);
 
         return view('client/commandes/show', compact('commande'));
+    }
+
+
+    public function annulerClient($id)
+    {
+        $commande = Commande::where('user_id', auth()->id())
+            ->findOrFail($id);
+
+        // On peut annuler seulement si en attente
+        if ($commande->statut !== 'en_attente') {
+            return back()->with('error', 'Impossible d\'annuler cette commande !');
+        }
+
+        // Remettre le stock
+        foreach ($commande->items as $item) {
+            $item->burger->increment('stock', $item->quantite);
+        }
+
+        $commande->update(['statut' => 'annulee']);
+
+        return back()->with('success', 'Commande annulée avec succès !');
     }
 }

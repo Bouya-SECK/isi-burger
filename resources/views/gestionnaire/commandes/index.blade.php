@@ -49,9 +49,23 @@
                     <td>{{ $commande->created_at->format('d/m/Y H:i') }}</td>
                     <td>
                         <a href="{{ route('gestionnaire.commandes.show', $commande) }}"
-                           class="btn btn-sm btn-outline-primary rounded-pill">
+                           class="btn btn-sm btn-outline-primary rounded-pill me-1">
                             <i class="bi bi-eye"></i>
                         </a>
+
+                        {{-- Supprimer seulement si annulée --}}
+                        @if($commande->statut === 'annulee')
+                            <form method="POST"
+                                  action="{{ route('gestionnaire.commandes.supprimer', $commande) }}"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Supprimer définitivement cette commande ?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @empty

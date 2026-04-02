@@ -80,10 +80,10 @@ class BurgerController extends Controller
     public function destroy($id)
     {
         $burger = Burger::findOrFail($id);
-        $burger->update(['actif' => false]);
+        $burger->delete();
 
         return redirect()->route('gestionnaire.burgers.index')
-            ->with('success', 'Burger archivé avec succès !');
+            ->with('success', 'Burger supprimé avec succès !');
     }
 
     public function show($id)

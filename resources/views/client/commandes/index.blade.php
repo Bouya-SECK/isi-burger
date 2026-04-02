@@ -48,9 +48,23 @@
                     <td>{{ $commande->created_at->format('d/m/Y H:i') }}</td>
                     <td>
                         <a href="{{ route('client.commandes.show', $commande) }}"
-                           class="btn btn-sm btn-outline-primary rounded-pill">
+                           class="btn btn-sm btn-outline-primary rounded-pill me-1">
                             <i class="bi bi-eye"></i> Détail
                         </a>
+
+                        {{-- Annuler (seulement si en attente) --}}
+                        @if($commande->statut === 'en_attente')
+                            <form method="POST"
+                                  action="{{ route('client.commandes.annuler', $commande) }}"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Annuler cette commande ?')">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">
+                                    <i class="bi bi-x-circle"></i> Annuler
+                                </button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @empty

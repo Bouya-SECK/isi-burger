@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder
 
         // Créer un client test
         User::create([
-            'name'     => 'Client Test',
-            'email'    => 'client@isiburger.com',
-            'password' => bcrypt('password'),
+            'name'     => 'Bouya SECK',
+            'email'    => 'bouyaseck02@gmail.com',
+            'password' => bcrypt('passer123'),
             'role'     => 'client',
         ]);
 

@@ -37,6 +37,8 @@ Route::middleware(['auth', 'role:gestionnaire'])->prefix('gestionnaire')->name('
 
     Route::patch('/commandes/{commande}/annuler', [CommandeController::class, 'annuler'])->name('commandes.annuler');
 
+    Route::delete('/commandes/{commande}', [CommandeController::class, 'supprimer'])->name('commandes.supprimer');
+
     Route::post('/paiements/{commande}', [PaiementController::class, 'store'])->name('paiements.store');
 
     Route::get('/stats', [StatController::class, 'index'])->name('stats');
@@ -57,4 +59,7 @@ Route::middleware(['auth', 'role:client'])->prefix('client')->name('client.')->g
     Route::post('/commandes', [CommandeController::class, 'store'])->name('commandes.store');
 
     Route::get('/commandes/{commande}', [CommandeController::class, 'showClient'])->name('commandes.show');
+
+    Route::patch('/commandes/{commande}/annuler', [CommandeController::class, 'annulerClient'])->name('commandes.annuler');
+
 });

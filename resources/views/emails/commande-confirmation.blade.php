@@ -1,5 +1,6 @@
 @component('mail::message')
-    # Commande confirmée ! 🍔
+
+    # Commande confirmée !
 
     Bonjour **{{ $commande->user->name }}**,
 
@@ -11,15 +12,13 @@
         @foreach($commande->items as $item)
             | {{ $item->burger->nom }} | x{{ $item->quantite }} | {{ number_format($item->prix_unitaire * $item->quantite, 0, ',', ' ') }} F |
         @endforeach
+        | **Total** | | **{{ number_format($commande->total, 0, ',', ' ') }} F CFA** |
     @endcomponent
-
-    **Total : {{ number_format($commande->total, 0, ',', ' ') }} F CFA**
 
     Nous vous préviendrons dès que votre commande sera prête.
 
-    @component('mail::button', ['url' => config('app.url'), 'color' => 'primary'])
-        Suivre ma commande
-    @endcomponent
+    Merci de votre confiance !
 
     **ISI BURGER** — Le meilleur burger de Dakar
+
 @endcomponent

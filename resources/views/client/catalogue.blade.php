@@ -1,25 +1,6 @@
 @extends('layouts.client')
 
 @section('content')
-
-    {{-- Message de bienvenue --}}
-    <div class="p-4 mb-4 rounded-4 text-white"
-         style="background: linear-gradient(135deg, #ff6b00, #ff9a00);
-            box-shadow: 0 4px 20px rgba(255,107,0,0.3);">
-        <div class="d-flex align-items-center gap-3">
-            <div style="font-size: 3rem;">🍔</div>
-            <div>
-                <h4 class="fw-bold mb-1" style="font-size:1.4rem;">
-                    Bienvenue, {{ auth()->user()->name }} !
-                </h4>
-                <p class="mb-0" style="opacity:0.9; font-size:0.95rem;">
-                    Bienvenue chez <strong>ISI BURGER</strong> —
-                    Découvrez nos délicieux burgers et passez votre commande !
-                </p>
-            </div>
-        </div>
-    </div>
-
     {{-- Titre catalogue --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -34,7 +15,7 @@
     <div class="bg-white rounded-3 p-3 mb-4 shadow-sm d-flex gap-3 flex-wrap align-items-center">
         <form method="GET" action="{{ route('client.catalogue') }}" class="d-flex gap-2 flex-wrap w-100">
             <input type="text" name="search" class="form-control" style="max-width:220px;"
-                   placeholder="🔍 Rechercher..." value="{{ request('search') }}">
+                   placeholder=" Rechercher..." value="{{ request('search') }}">
 
             <select name="categorie" class="form-select" style="max-width:180px;">
                 <option value="">Toutes catégories</option>
@@ -56,7 +37,7 @@
         </form>
     </div>
 
-    {{-- Grille burgers --}}
+    {{-- Catalogue des burgers --}}
     <div class="row g-4">
         @forelse($burgers as $burger)
             <div class="col-md-4 col-sm-6">
@@ -84,11 +65,14 @@
 
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <span class="burger-prix">{{ number_format($burger->prix, 0, ',', ' ') }} F</span>
-
+                            {{--
+                                  Si la stock est 0 : on affiche rupture de stock
+                                  et on masque la bouton commander et Sinon on affiche
+                                  la Bouton Commander
+                            --}}
                             @if($burger->stock <= 0)
                                 <span class="badge-rupture">Rupture de stock</span>
                             @else
-                                {{-- Bouton Commander --}}
                                 <button class="btn-orange btn"
                                         data-bs-toggle="modal"
                                         data-bs-target="#modalCommander"

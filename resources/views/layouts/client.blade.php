@@ -198,13 +198,13 @@
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('client.catalogue') ? 'active' : '' }}"
                        href="{{ route('client.catalogue') }}">
-                        <i class="bi bi-grid"></i> Catalogue
+                        <i class=""></i> Catalogue
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('client.commandes.*') ? 'active' : '' }}"
                        href="{{ route('client.commandes.index') }}">
-                        <i class="bi bi-bag"></i> Mes commandes
+                        <i class=""></i> Mes commandes
                     </a>
                 </li>
             </ul>
@@ -212,7 +212,7 @@
             <ul class="navbar-nav align-items-center gap-2">
                 <li class="nav-item">
                     <span style="color:rgba(255,255,255,0.5); font-size:0.88rem;">
-                        👤 {{ auth()->user()->name }}
+                        {{ auth()->user()->name }}
                     </span>
                 </li>
                 <li class="nav-item">

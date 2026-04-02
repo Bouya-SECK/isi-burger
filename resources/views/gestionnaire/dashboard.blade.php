@@ -11,31 +11,27 @@
             <div class="stat-card position-relative">
                 <div class="stat-label">Commandes en cours</div>
                 <div class="stat-value">{{ $commandesEnCours }}</div>
-                <i class="bi bi-clock-history stat-icon"></i>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="stat-card green position-relative">
+            <div class="stat-card position-relative">
                 <div class="stat-label">Commandes validées</div>
                 <div class="stat-value">{{ $commandesValidees }}</div>
-                <i class="bi bi-check-circle stat-icon"></i>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="stat-card blue position-relative">
+            <div class="stat-card position-relative">
                 <div class="stat-label">Recettes du jour</div>
                 <div class="stat-value">{{ number_format($recetteJour, 0, ',', ' ') }} F</div>
-                <i class="bi bi-cash-stack stat-icon"></i>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="stat-card red position-relative">
+            <div class="stat-card position-relative">
                 <div class="stat-label">Burgers au catalogue</div>
                 <div class="stat-value">{{ $totalBurgers }}</div>
-                <i class="bi bi-egg-fried stat-icon"></i>
             </div>
         </div>
 
@@ -43,7 +39,7 @@
 
     {{-- ── Dernières commandes ── --}}
     <div class="table-card">
-        <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-5">
             <div class="table-title">Dernières commandes</div>
             <a href="{{ route('gestionnaire.commandes.index') }}"
                class="btn btn-sm btn-outline-secondary rounded-pill">
@@ -77,7 +73,7 @@
                     <td>
                         <a href="{{ route('gestionnaire.commandes.show', $commande) }}"
                            class="btn btn-sm btn-outline-primary rounded-pill">
-                            <i class="bi bi-eye"></i>
+                            <i class="">Voir details </i>
                         </a>
                     </td>
                 </tr>

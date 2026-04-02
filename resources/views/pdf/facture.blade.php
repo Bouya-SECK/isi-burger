@@ -95,7 +95,7 @@
 <body>
 
 <div class="header">
-    <h1>🍔 ISI BURGER</h1>
+    <h1>ISI BURGER</h1>
     <p>Dakar, Sénégal — Le meilleur burger de Dakar</p>
 </div>
 
@@ -147,7 +147,7 @@
 </div>
 
 <div class="footer">
-    <p>Merci pour votre confiance ! — ISI BURGER</p>
+    <p>Merci pour votre confiance ! ISI BURGER</p>
     <p>Cette facture a été générée automatiquement.</p>
 </div>
 
