@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Commande;
 use App\Models\CommandeItem;
 use App\Models\Burger;
+use App\Http\Requests\StoreCommandeRequest;
 use App\Mail\CommandeConfirmation;
 use App\Mail\CommandePrete;
 use Illuminate\Support\Facades\Mail;
@@ -91,31 +92,20 @@ class CommandeController extends Controller
         return view('client/commandes/index', compact('commandes'));
     }
 
-    public function store(Request $request)
+    public function store(StoreCommandeRequest $request)
     {
-        $request->validate([
-            'burger_id' => 'required|exists:burgers,id',
-            'quantite'  => 'required|integer|min:1|max:10',
-        ]);
-
         $burger = Burger::findOrFail($request->burger_id);
 
-        // Vérifier le stock
         if ($burger->stock < $request->quantite) {
             return back()->with('error', 'Stock insuffisant pour ce burger !');
         }
 
-        // Créer la commande
         $commande = Commande::create([
             'user_id' => auth()->id(),
             'statut'  => 'en_attente',
             'total'   => $burger->prix * $request->quantite,
         ]);
 
-        // Après la création de la commande, ajoute :
-        Mail::to(auth()->user()->email)->send(new CommandeConfirmation($commande));
-
-        // Ajouter l'item
         CommandeItem::create([
             'commande_id'   => $commande->id,
             'burger_id'     => $burger->id,
@@ -123,8 +113,12 @@ class CommandeController extends Controller
             'prix_unitaire' => $burger->prix,
         ]);
 
-        // Déduire le stock
         $burger->decrement('stock', $request->quantite);
+
+        Mail::to(auth()->user()->email)
+            ->send(new CommandeConfirmation(
+                $commande->load('items.burger', 'user')
+            ));
 
         return back()->with('success', 'Commande passée avec succès !');
     }

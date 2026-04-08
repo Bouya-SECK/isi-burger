@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Burger;
 use App\Models\Categorie;
+use App\Http\Requests\StoreBurgerRequest;
+use App\Http\Requests\UpdateBurgerRequest;
 
 class BurgerController extends Controller
 {
@@ -20,23 +22,15 @@ class BurgerController extends Controller
         return view('gestionnaire.burgers.create', compact('categories'));
     }
 
-    public function store(Request $request)
+    public function store(StoreBurgerRequest $request)
     {
-        $request->validate([
-            'nom'          => 'required|string|max:255',
-            'prix'         => 'required|numeric|min:0',
-            'description'  => 'nullable|string',
-            'categorie_id' => 'required|exists:categories,id',
-            'stock'        => 'required|integer|min:0',
-            'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
+        $data = $request->validated();
 
-        $data = $request->all();
-
-        // Upload image
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('burgers', 'public');
         }
+
+        $data['actif'] = $request->has('actif') ? true : false;
 
         Burger::create($data);
 
@@ -51,25 +45,16 @@ class BurgerController extends Controller
         return view('gestionnaire.burgers.edit', compact('burger', 'categories'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateBurgerRequest $request, $id)
     {
         $burger = Burger::findOrFail($id);
+        $data   = $request->validated();
 
-        $request->validate([
-            'nom'          => 'required|string|max:255',
-            'prix'         => 'required|numeric|min:0',
-            'description'  => 'nullable|string',
-            'categorie_id' => 'required|exists:categories,id',
-            'stock'        => 'required|integer|min:0',
-            'image'        => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
-        ]);
-
-        $data = $request->all();
-
-        // Upload nouvelle image
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('burgers', 'public');
         }
+
+        $data['actif'] = $request->has('actif') ? true : false;
 
         $burger->update($data);
 
